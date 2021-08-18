@@ -86,6 +86,9 @@ RUN composer install --no-scripts --no-interaction --prefer-dist
 # Development: =================================================================
 FROM testing-base AS development
 
+# Recibir el ID y el nombre del usuario desarrollador
+ARG DEVELOPER_USER=developer
+
 # Cambiarse al usuario "root" para instalar las dependencias (incluyendo sudo)
 USER root
 
@@ -140,7 +143,8 @@ USER root
 # Instalar netcat:
 RUN apt-get install -y --no-install-recommends \
   # Para esperar a que el servicio de minio (u otros) esté disponible:
-  netcat
+  netcat \
+  sudo
 
 USER ${DEVELOPER_USER}
 
