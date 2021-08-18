@@ -1,31 +1,22 @@
-# alias ci-compose="docker-compose -f docker-compose.yml -f ci-compose.yml"
-
-volumes:
-  app_node_modules:
-  app_vendor:
+# alias ci-compose="docker-compose -f docker-compose.yml -f staging-compose.yml"
 
 services:
-  tests:
-    image: vovimayhem/php-demo:testing
+  web:
+    image: vovimayhem/php-demo:latest
     build:
       context: .
       dockerfile: Dockerfile
-      target: testing
+      target: release
       args:
         DEVELOPER_UID: ${UID:-1000}
         DEVELOPER_USER: ${USER:-developer}
-    volumes:
-      - .:/var/www/html
-
-      - app_node_modules:/var/www/html/node_modules
-      - app_vendor:/var/www/html/vendor
-    entrypoint: /var/www/html/bin/dev-entrypoint
-    command: php artisan test
+    ports:
+      - published: ${DEMO_WEB_STAGING_PORT:-80}
+        target: 80
     depends_on:
       - mysql
       - redis
       - mailhog
-      - chrome
     environment:
       APP_NAME: Demo
       APP_ENV: local
