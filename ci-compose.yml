@@ -7,7 +7,7 @@ volumes:
 
 services:
   tests:
-    image: vovimayhem/php-demo:testing
+    image: manquintero/php-demo:testing
     build:
       context: .
       dockerfile: Dockerfile

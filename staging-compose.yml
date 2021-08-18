@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: vovimayhem/php-demo:latest
+    image: manquintero/php-demo:latest
     build:
       context: .
       dockerfile: Dockerfile
